@@ -13,9 +13,12 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as CoachRouteImport } from './routes/coach'
 import { Route as ComunidadRouteImport } from './routes/comunidad'
 import { Route as EntrenadorRouteImport } from './routes/entrenador'
+import { Route as LegalRouteImport } from './routes/legal'
+import { Route as NutricionRouteImport } from './routes/nutricion'
 import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as PlanRouteImport } from './routes/plan'
 import { Route as ProgresoRouteImport } from './routes/progreso'
+import { Route as RecetasRouteImport } from './routes/recetas'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as ApiCoachRouteImport } from './routes/api/coach'
 import { Route as SesionIndexRouteImport } from './routes/sesion.$index'
@@ -41,6 +44,16 @@ const EntrenadorRoute = EntrenadorRouteImport.update({
   path: '/entrenador',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LegalRoute = LegalRouteImport.update({
+  id: '/legal',
+  path: '/legal',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NutricionRoute = NutricionRouteImport.update({
+  id: '/nutricion',
+  path: '/nutricion',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PerfilRoute = PerfilRouteImport.update({
   id: '/perfil',
   path: '/perfil',
@@ -54,6 +67,11 @@ const PlanRoute = PlanRouteImport.update({
 const ProgresoRoute = ProgresoRouteImport.update({
   id: '/progreso',
   path: '/progreso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecetasRoute = RecetasRouteImport.update({
+  id: '/recetas',
+  path: '/recetas',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ResetPasswordRoute = ResetPasswordRouteImport.update({
@@ -83,9 +101,12 @@ export interface FileRoutesByFullPath {
   '/coach': typeof CoachRoute
   '/comunidad': typeof ComunidadRoute
   '/entrenador': typeof EntrenadorRoute
+  '/legal': typeof LegalRoute
+  '/nutricion': typeof NutricionRoute
   '/perfil': typeof PerfilRoute
   '/plan': typeof PlanRoute
   '/progreso': typeof ProgresoRoute
+  '/recetas': typeof RecetasRoute
   '/reset-password': typeof ResetPasswordRoute
   '/api/coach': typeof ApiCoachRoute
   '/sesion/$index': typeof SesionIndexRoute
@@ -96,9 +117,12 @@ export interface FileRoutesByTo {
   '/coach': typeof CoachRoute
   '/comunidad': typeof ComunidadRoute
   '/entrenador': typeof EntrenadorRoute
+  '/legal': typeof LegalRoute
+  '/nutricion': typeof NutricionRoute
   '/perfil': typeof PerfilRoute
   '/plan': typeof PlanRoute
   '/progreso': typeof ProgresoRoute
+  '/recetas': typeof RecetasRoute
   '/reset-password': typeof ResetPasswordRoute
   '/api/coach': typeof ApiCoachRoute
   '/sesion/$index': typeof SesionIndexRoute
@@ -110,9 +134,12 @@ export interface FileRoutesById {
   '/coach': typeof CoachRoute
   '/comunidad': typeof ComunidadRoute
   '/entrenador': typeof EntrenadorRoute
+  '/legal': typeof LegalRoute
+  '/nutricion': typeof NutricionRoute
   '/perfil': typeof PerfilRoute
   '/plan': typeof PlanRoute
   '/progreso': typeof ProgresoRoute
+  '/recetas': typeof RecetasRoute
   '/reset-password': typeof ResetPasswordRoute
   '/api/coach': typeof ApiCoachRoute
   '/sesion/$index': typeof SesionIndexRoute
@@ -125,9 +152,12 @@ export interface FileRouteTypes {
     | '/coach'
     | '/comunidad'
     | '/entrenador'
+    | '/legal'
+    | '/nutricion'
     | '/perfil'
     | '/plan'
     | '/progreso'
+    | '/recetas'
     | '/reset-password'
     | '/api/coach'
     | '/sesion/$index'
@@ -138,9 +168,12 @@ export interface FileRouteTypes {
     | '/coach'
     | '/comunidad'
     | '/entrenador'
+    | '/legal'
+    | '/nutricion'
     | '/perfil'
     | '/plan'
     | '/progreso'
+    | '/recetas'
     | '/reset-password'
     | '/api/coach'
     | '/sesion/$index'
@@ -151,9 +184,12 @@ export interface FileRouteTypes {
     | '/coach'
     | '/comunidad'
     | '/entrenador'
+    | '/legal'
+    | '/nutricion'
     | '/perfil'
     | '/plan'
     | '/progreso'
+    | '/recetas'
     | '/reset-password'
     | '/api/coach'
     | '/sesion/$index'
@@ -165,9 +201,12 @@ export interface RootRouteChildren {
   CoachRoute: typeof CoachRoute
   ComunidadRoute: typeof ComunidadRoute
   EntrenadorRoute: typeof EntrenadorRoute
+  LegalRoute: typeof LegalRoute
+  NutricionRoute: typeof NutricionRoute
   PerfilRoute: typeof PerfilRoute
   PlanRoute: typeof PlanRoute
   ProgresoRoute: typeof ProgresoRoute
+  RecetasRoute: typeof RecetasRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
   ApiCoachRoute: typeof ApiCoachRoute
   SesionIndexRoute: typeof SesionIndexRoute
@@ -204,6 +243,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EntrenadorRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/legal': {
+      id: '/legal'
+      path: '/legal'
+      fullPath: '/legal'
+      preLoaderRoute: typeof LegalRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/nutricion': {
+      id: '/nutricion'
+      path: '/nutricion'
+      fullPath: '/nutricion'
+      preLoaderRoute: typeof NutricionRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/perfil': {
       id: '/perfil'
       path: '/perfil'
@@ -223,6 +276,13 @@ declare module '@tanstack/react-router' {
       path: '/progreso'
       fullPath: '/progreso'
       preLoaderRoute: typeof ProgresoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recetas': {
+      id: '/recetas'
+      path: '/recetas'
+      fullPath: '/recetas'
+      preLoaderRoute: typeof RecetasRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/reset-password': {
@@ -261,9 +321,12 @@ const rootRouteChildren: RootRouteChildren = {
   CoachRoute: CoachRoute,
   ComunidadRoute: ComunidadRoute,
   EntrenadorRoute: EntrenadorRoute,
+  LegalRoute: LegalRoute,
+  NutricionRoute: NutricionRoute,
   PerfilRoute: PerfilRoute,
   PlanRoute: PlanRoute,
   ProgresoRoute: ProgresoRoute,
+  RecetasRoute: RecetasRoute,
   ResetPasswordRoute: ResetPasswordRoute,
   ApiCoachRoute: ApiCoachRoute,
   SesionIndexRoute: SesionIndexRoute,
