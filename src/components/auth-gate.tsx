@@ -59,7 +59,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
   }, []);
 
   const path = useRouterState({ select: (r) => r.location.pathname });
-  if (path === "/reset-password" || path.startsWith("/entrenador")) return <>{children}</>;
+  if (path === "/reset-password" || path.startsWith("/entrenador") || path.startsWith("/legal")) return <>{children}</>;
   if (state === "loading") return <Screen />;
   if (state === "out") return <AuthScreen />;
   return <div key={userId ?? "u"}><Paywall plan="athlete">{children}</Paywall></div>;
