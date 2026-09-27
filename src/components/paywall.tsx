@@ -10,7 +10,7 @@ const PLANS: Record<Plan, { product: string; price: string; amount: string; titl
     price: "athlete_monthly",
     amount: "US$15",
     title: "ACTIVA TU PLAN",
-    perks: ["Plan personalizado según tu cuerpo, nivel y lesiones", "Coach IA durante y después de entrenar", "Contador de calorías y macros con escáner", "Progreso, medidas y gráficas", "Comunidad y retos trimestrales"],
+    perks: ["Plan personalizado según tu cuerpo, nivel y lesiones", "Coach IA durante y después de entrenar", "Progreso, medidas y gráficas", "Comunidad y retos trimestrales"],
   },
   trainer: {
     product: "trainer_plan",

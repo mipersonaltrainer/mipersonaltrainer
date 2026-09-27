@@ -1,4 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { Paywall } from "@/components/paywall";
+import { syncTrainerSeats } from "@/utils/billing.functions";
+import { getPaddleEnvironment } from "@/lib/paddle";
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, Chip, FlameButton, Label, Screen } from "@/components/ui-kit";
@@ -45,7 +48,7 @@ function TrainerPage() {
   if (state === "loading") return <Screen />;
   if (state === "out") return <TrainerAuth />;
   if (state === "notTrainer") return <Activate onDone={check} />;
-  return <Dashboard />;
+  return <Paywall plan="trainer"><Dashboard /></Paywall>;
 }
 
 function Header({ title, sub }: { title: string; sub?: string }) {
@@ -129,11 +132,11 @@ function Dashboard() {
   }, []);
   useEffect(() => void load(), [load]);
 
-  if (open) return <StudentEditor student={open === "new" ? null : open} onClose={() => { setOpen(null); void load(); }} />;
+  if (open) return <StudentEditor student={open === "new" ? null : open} onClose={() => { setOpen(null); void load(); void syncTrainerSeats({ data: { environment: getPaddleEnvironment() } }).catch(() => {}); }} />;
 
   return (
     <Screen>
-      <Header title="MIS ALUMNOS" sub={`${students.length} alumno${students.length === 1 ? "" : "s"}. Registra sus medidas y genera o ajusta su rutina.`} />
+      <Header title="MIS ALUMNOS" sub={`${students.length} alumno${students.length === 1 ? "" : "s"} · 20 incluidos${students.length > 20 ? ` · ${students.length - 20} adicionales (US$${((students.length - 20) * 0.2).toFixed(2)}/mes)` : ""}. Cada alumno extra cuesta US$0,20 al mes.`} />
       <div className="mt-6 space-y-3 px-6">
         <FlameButton onClick={() => setOpen("new")} className="w-full">+ NUEVO ALUMNO</FlameButton>
         {students.map((s) => (
