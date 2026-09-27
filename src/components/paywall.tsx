@@ -34,7 +34,7 @@ export function PaymentTestModeBanner() {
 export function Paywall({ plan, children }: { plan: Plan; children: ReactNode }) {
   const cfg = PLANS[plan];
   const [state, setState] = useState<"loading" | "locked" | "open">("loading");
-  const [user, setUser] = useState<{ id: string; email?: string } | null>(null);
+  const [user, setUser] = useState<{ id: string; email?: string | undefined } | null>(null);
   const [waiting, setWaiting] = useState(false);
   const [err, setErr] = useState<string | null>(null);
 
