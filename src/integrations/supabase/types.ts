@@ -118,6 +118,51 @@ export type Database = {
           },
         ]
       }
+      food_logs: {
+        Row: {
+          barcode: string | null
+          carbs: number
+          created_at: string
+          day: string
+          fat: number
+          grams: number
+          id: string
+          kcal: number
+          meal: string
+          name: string
+          protein: number
+          user_id: string
+        }
+        Insert: {
+          barcode?: string | null
+          carbs?: number
+          created_at?: string
+          day?: string
+          fat?: number
+          grams?: number
+          id?: string
+          kcal?: number
+          meal?: string
+          name: string
+          protein?: number
+          user_id?: string
+        }
+        Update: {
+          barcode?: string | null
+          carbs?: number
+          created_at?: string
+          day?: string
+          fat?: number
+          grams?: number
+          id?: string
+          kcal?: number
+          meal?: string
+          name?: string
+          protein?: number
+          user_id?: string
+        }
+        Relationships: []
+      }
       likes: {
         Row: {
           post_id: string
