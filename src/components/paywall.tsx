@@ -3,21 +3,28 @@ import { supabase } from "@/integrations/supabase/client";
 import { getPaddleEnvironment, getPaddlePriceId, initializePaddle } from "@/lib/paddle";
 import { FlameButton, Screen } from "@/components/ui-kit";
 
-type Plan = "athlete" | "trainer";
+type Plan = "athlete" | "trainer" | "recipes";
 const PLANS: Record<Plan, { product: string; price: string; amount: string; title: string; perks: string[] }> = {
   athlete: {
     product: "athlete_plan",
     price: "athlete_monthly",
     amount: "US$15",
     title: "ACTIVA TU PLAN",
-    perks: ["Plan personalizado según tu cuerpo, nivel y lesiones", "Coach IA durante y después de entrenar", "Progreso, medidas y gráficas", "Comunidad y retos trimestrales"],
+    perks: ["Plan personalizado según tu cuerpo, nivel y lesiones", "Coach IA durante y después de entrenar", "Contador de calorías y macros con escáner", "Progreso, medidas y gráficas", "Comunidad y retos trimestrales"],
   },
   trainer: {
     product: "trainer_plan",
     price: "trainer_monthly",
     amount: "US$5",
     title: "ACTIVA TU PANEL",
-    perks: ["Registra alumnos con sus medidas", "Genera y ajusta sus rutinas", "Cargas sugeridas y calorías por sesión"],
+    perks: ["Hasta 20 alumnos incluidos", "US$0,20 al mes por cada alumno adicional", "Registra alumnos con sus medidas", "Genera y ajusta sus rutinas"],
+  },
+  recipes: {
+    product: "recipes_addon",
+    price: "recipes_monthly",
+    amount: "US$5",
+    title: "RECETAS PARA TI",
+    perks: ["Recetas creadas para tus calorías y macros", "Pide lo que tengas en la nevera", "Se suma a tu plan mensual"],
   },
 };
 
@@ -42,13 +49,17 @@ export function Paywall({ plan, children }: { plan: Plan; children: ReactNode })
     const { data } = await supabase.auth.getUser();
     if (!data.user) return false;
     setUser({ id: data.user.id, email: data.user.email ?? undefined });
-    const { data: ok } = await supabase.rpc("has_active_subscription", {
-      user_uuid: data.user.id,
-      check_env: getPaddleEnvironment(),
-      check_product: cfg.product,
-    });
-    setState(ok ? "open" : "locked");
-    return !!ok;
+    const [{ data: ok }, { data: admin }] = await Promise.all([
+      supabase.rpc("has_active_subscription", {
+        user_uuid: data.user.id,
+        check_env: getPaddleEnvironment(),
+        check_product: cfg.product,
+      }),
+      supabase.rpc("has_role", { _user_id: data.user.id, _role: "admin" }),
+    ]);
+    const open = !!ok || !!admin;
+    setState(open ? "open" : "locked");
+    return open;
   }, [cfg.product]);
 
   useEffect(() => void check(), [check]);

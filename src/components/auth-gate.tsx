@@ -4,6 +4,7 @@ import { pullCloud } from "@/lib/cloud-sync";
 import { useRouterState } from "@tanstack/react-router";
 import { ensureCommunityProfile } from "@/lib/community";
 import { FlameButton, Label, Screen } from "@/components/ui-kit";
+import { Paywall } from "@/components/paywall";
 
 const REMEMBER_KEY = "pt.remember";
 const EMAIL_KEY = "pt.email";
@@ -60,7 +61,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
   if (path === "/reset-password" || path.startsWith("/entrenador")) return <>{children}</>;
   if (state === "loading") return <Screen />;
   if (state === "out") return <AuthScreen />;
-  return <div key={userId ?? "u"}>{children}</div>;
+  return <div key={userId ?? "u"}><Paywall plan="athlete">{children}</Paywall></div>;
 }
 
 const COUNTRIES = [

@@ -556,6 +556,8 @@ export type Profile = {
   startFocus?: StartFocusId | undefined;
   injuries?: Injuries | undefined;
   bodyWeight: number;
+  /** Metas diarias indicadas por nutricionista/entrenador (reemplazan las calculadas) */
+  macroTargets?: { kcal?: number | undefined; protein?: number | undefined; carbs?: number | undefined; fat?: number | undefined } | undefined;
   daysPerWeek: number;
   reminderTime: string;
   reminderDays: number[];
