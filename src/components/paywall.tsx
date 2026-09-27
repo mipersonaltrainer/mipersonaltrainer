@@ -3,14 +3,14 @@ import { supabase } from "@/integrations/supabase/client";
 import { getPaddleEnvironment, getPaddlePriceId, initializePaddle } from "@/lib/paddle";
 import { FlameButton, Screen } from "@/components/ui-kit";
 
-type Plan = "athlete" | "trainer" | "recipes";
+type Plan = "athlete" | "trainer" | "recipes" | "nutrition";
 const PLANS: Record<Plan, { product: string; price: string; amount: string; title: string; perks: string[] }> = {
   athlete: {
     product: "athlete_plan",
     price: "athlete_monthly",
     amount: "US$15",
     title: "ACTIVA TU PLAN",
-    perks: ["Plan personalizado según tu cuerpo, nivel y lesiones", "Coach IA durante y después de entrenar", "Contador de calorías y macros con escáner", "Progreso, medidas y gráficas", "Comunidad y retos trimestrales"],
+    perks: ["Plan personalizado según tu cuerpo, nivel y lesiones", "Coach IA durante y después de entrenar", "Progreso, medidas y gráficas", "Comunidad y retos trimestrales"],
   },
   trainer: {
     product: "trainer_plan",
@@ -25,6 +25,13 @@ const PLANS: Record<Plan, { product: string; price: string; amount: string; titl
     amount: "US$5",
     title: "RECETAS PARA TI",
     perks: ["Recetas creadas para tus calorías y macros", "Pide lo que tengas en la nevera", "Se suma a tu plan mensual"],
+  },
+  nutrition: {
+    product: "nutrition_addon",
+    price: "nutrition_monthly",
+    amount: "US$5",
+    title: "CUENTA TUS MACROS",
+    perks: ["Escanea el código de barras de tus productos", "Calorías y macros según tu plan o tu nutricionista", "Resumen diario por comida", "Se suma a tu plan mensual"],
   },
 };
 

@@ -5,6 +5,7 @@ import { useRouterState } from "@tanstack/react-router";
 import { ensureCommunityProfile } from "@/lib/community";
 import { FlameButton, Label, Screen } from "@/components/ui-kit";
 import { Paywall } from "@/components/paywall";
+import { lovable } from "@/integrations/lovable";
 
 const REMEMBER_KEY = "pt.remember";
 const EMAIL_KEY = "pt.email";
@@ -58,7 +59,7 @@ export function AuthGate({ children }: { children: ReactNode }) {
   }, []);
 
   const path = useRouterState({ select: (r) => r.location.pathname });
-  if (path === "/reset-password" || path.startsWith("/entrenador")) return <>{children}</>;
+  if (path === "/reset-password" || path.startsWith("/entrenador") || path.startsWith("/legal")) return <>{children}</>;
   if (state === "loading") return <Screen />;
   if (state === "out") return <AuthScreen />;
   return <div key={userId ?? "u"}><Paywall plan="athlete">{children}</Paywall></div>;
@@ -153,6 +154,26 @@ function AuthScreen() {
             {tab("up", "REGISTRARME")}
           </div>
         )}
+
+        {mode !== "forgot" && (
+          <div className="mt-4 space-y-2">
+            {(["google", "apple"] as const).map((p) => (
+              <button
+                key={p}
+                type="button"
+                onClick={async () => {
+                  const r = await lovable.auth.signInWithOAuth(p, { redirect_uri: window.location.origin });
+                  if (r.error) setMsg("No se pudo entrar. Intenta de nuevo.");
+                }}
+                className="w-full rounded-full bg-card py-3 font-display text-[14px] ring-1 ring-line/60"
+              >
+                CONTINUAR CON {p === "google" ? "GOOGLE" : "APPLE"}
+              </button>
+            ))}
+            <div className="pt-1 text-center font-mono text-[10px] uppercase tracking-[0.15em] text-mute">o con tu correo</div>
+          </div>
+        )}
+
 
         <form onSubmit={submit} className="mt-5 space-y-3">
           <Field label="Correo">

@@ -4,3 +4,4 @@
 - [ ] Recipes add-on $5/mo
 - [ ] Macro tracker (Yazio-like, barcode scan) add-on $5/mo
 - [ ] Google + Apple sign-in
+- [ ] Legal pages (DOZE GROUP SAS, NIT 902004230)
